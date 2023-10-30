@@ -20,7 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class PlatosRestController {
     @Autowired
     private PlatosServicios servicio;
-
+    
+    @CrossOrigin(origins = "*")
     @RequestMapping("/listarTodo")
     public String listarPlatos (Model model) {
 
@@ -53,7 +54,7 @@ public class PlatosRestController {
 
     //}
 
-
+    @CrossOrigin(origins = "*")
     @GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     @ResponseBody
     public ResponseEntity<Object> buscarPorId(@PathVariable("id") int id) {
@@ -80,20 +81,24 @@ public class PlatosRestController {
 
     }
     */
+    @CrossOrigin(origins = "*")
     @RequestMapping("/nuevo")
     public String nuevaPelicula(Model model) {
         Platos platos = new Platos ();
         model.addAttribute("platos",platos);
         return "/moduloPlatos/nuevoPlato";
     }
-
+    
+    @CrossOrigin(origins = "*")
     @RequestMapping(value ="/guardar", method= RequestMethod.POST)
     public String crearPelicula(@ModelAttribute("platos") Platos platos) {
         servicio.crear(platos);
         return "redirect:/rest/platos/listarTodo";
 
     }
+    
     //actualizar por ID --------------USANDO
+    @CrossOrigin(origins = "*")
     @RequestMapping(value ="/actualizar/{id}")
     public ModelAndView editarPelicula(@PathVariable(name="id") int id) {
         ModelAndView mav = new ModelAndView("/moduloPlatos/editarPlato");
@@ -108,7 +113,7 @@ public class PlatosRestController {
 
 
 
-
+        @CrossOrigin(origins = "*")
         @PutMapping (value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE },
             consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }
     )
@@ -121,6 +126,7 @@ public class PlatosRestController {
     }
 
     ///eliminado
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/eliminar/{id}")
     public String elimnarPelicula(@PathVariable(name="id") int id) {
         servicio.borrarPorId(id);
@@ -129,6 +135,7 @@ public class PlatosRestController {
 
 
     @DeleteMapping(value = "/{id}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Object> eliminar(@PathVariable("id") int id) {
         servicio.eliminarClientes(id);
         return new ResponseEntity<Object>("Funcion eliminada correctamente", HttpStatus.OK);
